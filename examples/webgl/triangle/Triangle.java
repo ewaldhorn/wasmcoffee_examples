@@ -65,9 +65,9 @@
 // they are locals in triangle_main rather than fields, because a field with an initialiser only
 // runs in main(), which the host never calls.
 //
-// Compile it with the wasmcoffee compiler:
+// Compile it with the repo's wasm-based compiler:
 //
-//     wasmcoffee --export-all Triangle.java -o triangle.wasm
+//     node ../../../tools/wccompile.mjs --export-all Triangle.java -o triangle.wasm
 //     ./build.sh        # does the above, then stages dist/
 
 final class WebGL {

@@ -26,12 +26,9 @@ and `host.js`. Since a `.wasm` binary cannot be fetched over `file://`, it needs
 `serve.sh` uses `python3 -m http.server`, but just about any static server should do. I just
 happen to use Python quite a lot!
 
-The build needs the wasmcoffee compiler from the sibling checkout. If it lives somewhere else,
-point at it explicitly:
-
-```sh
-WASMCOFFEE=/path/to/wasmcoffee ./build.sh
-```
+The build compiles through the repo's own `tools/wccompile.mjs`, which drives the
+vendored wasm compiler — Node 18+ is the only requirement, no native toolchain
+and no sibling checkout.
 
 ## So how does it work
 
