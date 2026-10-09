@@ -27,7 +27,7 @@ and `host.js`. Since a `.wasm` binary cannot be fetched over `file://`, it needs
 happen to use Python quite a lot!
 
 The build compiles through the repo's own `tools/wccompile.mjs`, which drives the
-vendored wasm compiler — Node 18+ is the only requirement, no native toolchain
+vendored wasm compiler — Node 20+ is the only requirement, no native toolchain
 and no sibling checkout.
 
 ## So how does it work
