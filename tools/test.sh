@@ -51,24 +51,42 @@ check "echo run" "$(printf 'got: one\ngot: two')" "$(printf 'one\ntwo\n' | node 
 node tools/wccompile.mjs examples/console/greet/Greet.java examples/console/greet/Greeter.java -o "$TMP/greet.wasm"
 check "greet run" "Hello, WasmCoffee!" "$(node tools/wcrun.mjs "$TMP/greet.wasm")"
 
-# 4. compile error: exit 1, no output file.
+# 4. bits: bitwise operations and intrinsics.
+node tools/wccompile.mjs examples/console/bits/Bits.java -o "$TMP/bits.wasm"
+EXPECTED_BITS=$(cat <<'EOF'
+a & b: 12
+a | b: 61
+a ^ b: 49
+~a: -61
+a << 2: 240
+a >> 2: 15
+bitCount: 4
+leadingZeros: 26
+trailingZeros: 2
+has read: true
+has write: false
+EOF
+)
+check "bits run" "$EXPECTED_BITS" "$(node tools/wcrun.mjs "$TMP/bits.wasm")"
+
+# 5. compile error: exit 1, no output file.
 printf 'public class Broken { this is not java }\n' | node tools/wccompile.mjs - -o "$TMP/broken.wasm" 2>"$TMP/diag.txt" || code=$?
 check_exit "compile error exit" 1 "$code"
 if [ -e "$TMP/broken.wasm" ]; then FAIL=$((FAIL + 1)); echo "FAIL compile error wrote output"; else PASS=$((PASS + 1)); echo "ok   compile error wrote nothing"; fi
 if grep -q "error" "$TMP/diag.txt"; then PASS=$((PASS + 1)); echo "ok   compile error diagnostic"; else FAIL=$((FAIL + 1)); echo "FAIL compile error diagnostic"; fi
 
-# 5. the WebGL example builds with the repo's wasm compiler only (no native
+# 6. the WebGL example builds with the repo's wasm compiler only (no native
 # toolchain, no sibling checkout). dist/ is gitignored build output, so the
 # gate builds it fresh — and the refusal check below runs against that build.
 ./examples/webgl/triangle/build.sh >"$TMP/tri_build.txt" 2>&1
 if [ -s examples/webgl/triangle/dist/triangle.wasm ]; then PASS=$((PASS + 1)); echo "ok   triangle builds native-free"; else FAIL=$((FAIL + 1)); echo "FAIL triangle builds native-free"; fi
 
-# 6. browser-only program is refused, not run.
+# 7. browser-only program is refused, not run.
 node tools/wcrun.mjs examples/webgl/triangle/dist/triangle.wasm 2>"$TMP/refuse.txt" || code=$?
 check_exit "graphics refusal exit" 2 "$code"
 if grep -q "needs a browser host" "$TMP/refuse.txt"; then PASS=$((PASS + 1)); echo "ok   graphics refusal message"; else FAIL=$((FAIL + 1)); echo "FAIL graphics refusal message"; fi
 
-# 7. a program that traps exits nonzero and says so.
+# 8. a program that traps exits nonzero and says so.
 cat > "$TMP/DivZero.java" <<'EOF'
 public class DivZero {
     public static void main(String[] args) {

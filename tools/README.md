@@ -129,7 +129,7 @@ Compiles and runs every `examples/console` program and checks stdout, builds
 the WebGL triangle through its own `build.sh` (proving the repo builds with
 the wasm compiler only), then checks the error paths: a compile error (exit 1,
 no output file), a browser-only refusal (exit 2), and a runtime trap (exit 2).
-Eleven checks, all green is the gate for touching anything in this directory.
+Twelve checks, all green is the gate for touching anything in this directory.
 
 ---
 
@@ -148,10 +148,10 @@ cp <webcoffee>/dist/wasmcoffee.wasm tools/wasmcoffee.wasm
 ./tools/test.sh                        # the gate
 ```
 
-This copy was built 2026-10-08 from wasmcoffee core `6e21174`
-("Backport core functionality"). A stale copy shows up as missing exports
-(`set_root_name` and friends degrade gracefully) or as behaviour the gate
-catches, rerun it after every refresh.
+This copy was built 2026-10-09 from wasmcoffee core `7c4853b` (v0.0.1,
+adds bit-twiddling intrinsics and wrapper API). A stale copy shows up as
+missing exports (`set_root_name` and friends degrade gracefully) or as
+behaviour the gate catches, rerun it after every refresh.
 
 To try a fresh compiler build without replacing the vendored one, point at it
 explicitly: `node tools/wccompile.mjs --compiler <webcoffee>/dist/wasmcoffee.wasm …`.
