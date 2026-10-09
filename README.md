@@ -6,7 +6,7 @@ Example programs for [WasmCoffee](https://wasmcoffee.com/), the Java-subset to W
 
 | Folder | Contents |
 |---|---|
-| [`examples/console/`](examples/console/) | Console programs: `println`, stdin reads, multi-file sets. Compile and run in a terminal. |
+| [`examples/console/`](examples/console/) | Console programs: `println`, stdin reads, multi-file sets, bit manipulation. Compile and run in a terminal. |
 | [`examples/webgl/`](examples/webgl/) | Browser programs: WebGL with a JS host page. Served statically, needs a browser. |
 | [`tools/`](tools/) | Offline CLI front ends for the compiler: `wccompile.mjs` (source to `.wasm`) and `wcrun.mjs` (run a console program in a terminal). Node only, no dependencies. |
 
@@ -18,6 +18,7 @@ The compiler in [`tools/`](tools/) is a Wasm binary with a two-import host surfa
 
 ```bash
 node tools/wccompile.mjs examples/console/hello/Hello.java -o hello.wasm
+node tools/wccompile.mjs examples/console/bits/Bits.java -o bits.wasm
 node tools/wccompile.mjs examples/console/greet/Greet.java examples/console/greet/Greeter.java -o greet.wasm
 cat Hello.java | node tools/wccompile.mjs - -o - > hello.wasm
 ```
