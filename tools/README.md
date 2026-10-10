@@ -148,10 +148,10 @@ cp <webcoffee>/dist/wasmcoffee.wasm tools/wasmcoffee.wasm
 ./tools/test.sh                        # the gate
 ```
 
-This copy was built 2026-10-09 from wasmcoffee core `7c4853b` (v0.0.1,
-adds bit-twiddling intrinsics and wrapper API). A stale copy shows up as
-missing exports (`set_root_name` and friends degrade gracefully) or as
-behaviour the gate catches, rerun it after every refresh.
+This copy was built 2026-10-10 from wasmcoffee core `e1684e9` (adds Batch
+2D canvas library and 1 MiB boundary scratch band reserve for `Memory.base()`).
+A stale copy shows up as missing exports (`set_root_name` and friends degrade
+gracefully) or as behaviour the gate catches, rerun it after every refresh.
 
 To try a fresh compiler build without replacing the vendored one, point at it
 explicitly: `node tools/wccompile.mjs --compiler <webcoffee>/dist/wasmcoffee.wasm …`.
